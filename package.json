@@ -1,7 +1,14 @@
 {
   "private": true,
   "scripts": {
-    "build": "tsc -p api/tsconfig.json && tsc -p web/tsconfig.json"
+    "build": "tsc -p api/tsconfig.json && tsc -p web/tsconfig.json",
+    "format": "yarn format:index && yarn format:web && yarn format:api",
+    "format:index": "prettier --write \"*.{js,json,md}\"",
+    "format:web": "prettier --write \"web/**/*.{js,json}\"",
+    "format:api": "prettier --write \"api/**/*.{js,ts,json}\"",
+    "contributors:add": "all-contributors add",
+    "contributors:generate": "all-contributors generate",
+    "prepare": "yarn format"
   },
   "dependencies": {
     "chrome-aws-lambda": "2.1.1",
@@ -13,6 +20,20 @@
     "@types/marked": "0.7.3",
     "@types/puppeteer": "2.0.1",
     "@types/puppeteer-core": "2.0.0",
+    "all-contributors-cli": "^6.16.1",
+    "husky": "^4.2.5",
+    "prettier": "^2.0.5",
     "typescript": "3.8.3"
-  }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn contributors:generate && yarn prepare"
+    }
+  },
+  "prettier": {
+    "semi": true,
+    "singleQuote": false,
+    "trailingComma": "all"
+  },
+  "license": "MIT"
 }
